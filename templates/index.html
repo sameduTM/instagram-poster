@@ -1,119 +1,308 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Instagram Auto-Poster</title>
-  <style>
-    body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; max-width: 880px; margin: 40px auto; padding: 0 20px; color: #222; }
-    h1 { font-size: 1.5rem; }
-    h2 { font-size: 1.1rem; margin-top: 2.5rem; border-bottom: 1px solid #eee; padding-bottom: 6px; }
-    .card { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
-    .btn { display: inline-block; background: #2563eb; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 0.9rem; }
-    .btn-danger { background: #dc2626; }
-    .btn-secondary { background: #555; }
-    label { display: block; font-size: 0.85rem; font-weight: 600; margin-top: 12px; margin-bottom: 4px; }
-    input[type=text], input[type=url], input[type=datetime-local], textarea, select, input[type=file] {
-      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 0.9rem;
-    }
-    textarea { min-height: 70px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 0.85rem; vertical-align: top; }
-    .status { padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; }
-    .status-pending { background: #fef3c7; color: #92400e; }
-    .status-processing { background: #dbeafe; color: #1e40af; }
-    .status-published { background: #d1fae5; color: #065f46; }
-    .status-failed { background: #fee2e2; color: #991b1b; }
-    .status-canceled { background: #e5e7eb; color: #374151; }
-    .flash { padding: 10px 14px; border-radius: 6px; margin-bottom: 10px; font-size: 0.9rem; }
-    .flash-success { background: #d1fae5; color: #065f46; }
-    .flash-error { background: #fee2e2; color: #991b1b; }
-    .muted { color: #777; font-size: 0.85rem; }
-    form.inline { display: inline; }
-  </style>
-</head>
-<body>
-  <h1>📸 Instagram Auto-Poster</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Instagram Auto-Poster</title>
+    <style>
+      body {
+        font-family:
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+        max-width: 880px;
+        margin: 40px auto;
+        padding: 0 20px;
+        color: #222;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin-top: 2.5rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 6px;
+      }
+      .card {
+        background: #fafafa;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin-bottom: 16px;
+      }
+      .btn {
+        display: inline-block;
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+      .btn-danger {
+        background: #dc2626;
+      }
+      .btn-secondary {
+        background: #555;
+      }
+      label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 12px;
+        margin-bottom: 4px;
+      }
+      input[type="text"],
+      input[type="url"],
+      input[type="datetime-local"],
+      textarea,
+      select,
+      input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 0.9rem;
+      }
+      textarea {
+        min-height: 70px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        font-size: 0.85rem;
+        vertical-align: top;
+      }
+      .status {
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .status-processing {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .status-published {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      .status-failed {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .status-canceled {
+        background: #e5e7eb;
+        color: #374151;
+      }
+      .flash {
+        padding: 10px 14px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
+      .flash-success {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      .flash-error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .muted {
+        color: #777;
+        font-size: 0.85rem;
+      }
+      form.inline {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📸 Instagram Auto-Poster</h1>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% for category, message in messages %}
-      <div class="flash flash-{{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %} {% for
+    category, message in messages %}
+    <div class="flash flash-{{ category }}">{{ message }}</div>
+    {% endfor %} {% endwith %}
 
-  <div class="card">
-    {% if account %}
-      <strong>Connected:</strong> @{{ account.username }} (IG user id {{ account.ig_user_id }})<br>
-      <span class="muted">Token expires: {{ account.token_expires_at }} — auto-refreshed daily by the scheduler.</span>
-    {% else %}
+    <div class="card">
+      {% if account %}
+      <strong>Connected:</strong> @{{ account.username }} (IG user id {{
+      account.ig_user_id }})<br />
+      <span class="muted"
+        >Token expires: {{ account.token_expires_at }} — auto-refreshed daily by
+        the scheduler.</span
+      >
+      {% else %}
       <strong>No Instagram account connected.</strong>
-      <p class="muted">You'll need a Meta Developer app with the Instagram product set up (see README.md).</p>
-      <a class="btn" href="{{ url_for('auth.login') }}">Connect Instagram Account</a>
+      <p class="muted">
+        You'll need a Meta Developer app with the Instagram product set up (see
+        README.md).
+      </p>
+      <a class="btn" href="{{ url_for('auth.login') }}"
+        >Connect Instagram Account</a
+      >
+      {% endif %}
+    </div>
+
+    {% if account %}
+    <h2>1. Upload media</h2>
+    <div class="card">
+      <p class="muted">
+        Instagram fetches media from a public URL — it can't reach localhost. If
+        you're testing locally, run a tunnel (e.g. <code>ngrok http 5000</code>)
+        and set <code>BASE_URL</code> in <code>.env</code> to the tunnel URL
+        first.
+      </p>
+      <form
+        action="{{ url_for('dashboard.upload') }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input
+          type="file"
+          name="media_file"
+          accept=".jpg,.jpeg,.png,.mp4,.mov"
+          required
+        />
+        <button class="btn" type="submit" style="margin-top: 10px">
+          Upload
+        </button>
+      </form>
+    </div>
+
+    <h2>2. Schedule a post</h2>
+    <div class="card">
+      <form action="{{ url_for('dashboard.schedule_post') }}" method="post">
+        <label>Media URL (public)</label>
+        <input
+          type="url"
+          name="media_url"
+          placeholder="https://..."
+          value="{{ request.args.get('prefill_url', '') }}"
+          required
+        />
+
+        <label>Media type</label>
+        <select
+          name="media_type"
+          id="media_type"
+          onchange="onTypeChange(this.value)"
+        >
+          <option value="IMAGE">Feed — Image (JPEG)</option>
+          <option value="VIDEO">Feed — Video</option>
+          <option value="REELS">Reel</option>
+          <option value="STORIES_IMAGE">Story — Image (JPEG, 9:16)</option>
+          <option value="STORIES_VIDEO">Story — Video (MP4, 9:16, ≤60s)</option>
+        </select>
+
+        <div id="caption_row">
+          <label
+            >Caption
+            <span style="color: #777; font-weight: 400"
+              >(not supported for Stories — ignored)</span
+            ></label
+          >
+          <textarea
+            name="caption"
+            maxlength="2200"
+            placeholder="Up to 2,200 characters for feed posts"
+          ></textarea>
+        </div>
+
+        <script>
+          function onTypeChange(val) {
+            var isStory = val.startsWith("STORIES");
+            document.getElementById("caption_row").style.opacity = isStory
+              ? "0.4"
+              : "1";
+          }
+        </script>
+
+        <label
+          >Scheduled time (leave blank to publish at next scheduler tick)</label
+        >
+        <input type="datetime-local" name="scheduled_time" />
+
+        <button class="btn" type="submit" style="margin-top: 14px">
+          Schedule Post
+        </button>
+      </form>
+    </div>
+
+    <h2>Scheduled / posted</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Caption</th>
+        <th>Type</th>
+        <th>Scheduled</th>
+        <th>Status</th>
+        <th>Result</th>
+        <th></th>
+      </tr>
+      {% for p in posts %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>
+          {{ (p.caption or '')[:40] }}{% if p.caption and p.caption|length > 40
+          %}…{% endif %}
+        </td>
+        <td>{{ p.media_type }}</td>
+        <td>{{ p.scheduled_time }}</td>
+        <td>
+          <span class="status status-{{ p.status }}">{{ p.status }}</span>
+        </td>
+        <td>
+          {% if p.permalink %}<a href="{{ p.permalink }}" target="_blank"
+            >view post</a
+          >{% endif %} {% if p.error_message %}<span
+            class="muted"
+            title="{{ p.error_message }}"
+            >⚠ error (hover)</span
+          >{% endif %}
+        </td>
+        <td>
+          {% if p.status == 'pending' %}
+          <form
+            class="inline"
+            action="{{ url_for('dashboard.publish_now', post_id=p.id) }}"
+            method="post"
+          >
+            <button class="btn btn-secondary" type="submit">Publish now</button>
+          </form>
+          <form
+            class="inline"
+            action="{{ url_for('dashboard.cancel', post_id=p.id) }}"
+            method="post"
+          >
+            <button class="btn btn-danger" type="submit">Cancel</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7" class="muted">No posts yet.</td>
+      </tr>
+      {% endfor %}
+    </table>
     {% endif %}
-  </div>
-
-  {% if account %}
-  <h2>1. Upload media</h2>
-  <div class="card">
-    <p class="muted">Instagram fetches media from a public URL — it can't reach localhost. If you're testing locally, run a tunnel (e.g. <code>ngrok http 5000</code>) and set <code>BASE_URL</code> in <code>.env</code> to the tunnel URL first.</p>
-    <form action="{{ url_for('dashboard.upload') }}" method="post" enctype="multipart/form-data">
-      <input type="file" name="media_file" accept=".jpg,.jpeg,.png,.mp4,.mov" required>
-      <button class="btn" type="submit" style="margin-top:10px;">Upload</button>
-    </form>
-  </div>
-
-  <h2>2. Schedule a post</h2>
-  <div class="card">
-    <form action="{{ url_for('dashboard.schedule_post') }}" method="post">
-      <label>Media URL (public)</label>
-      <input type="url" name="media_url" placeholder="https://..." value="{{ request.args.get('prefill_url', '') }}" required>
-
-      <label>Media type</label>
-      <select name="media_type">
-        <option value="IMAGE">Image (JPEG)</option>
-        <option value="VIDEO">Video</option>
-        <option value="REELS">Reel</option>
-      </select>
-
-      <label>Caption</label>
-      <textarea name="caption" maxlength="2200" placeholder="Up to 2,200 characters"></textarea>
-
-      <label>Scheduled time (leave blank to publish at next scheduler tick)</label>
-      <input type="datetime-local" name="scheduled_time">
-
-      <button class="btn" type="submit" style="margin-top:14px;">Schedule Post</button>
-    </form>
-  </div>
-
-  <h2>Scheduled / posted</h2>
-  <table>
-    <tr><th>ID</th><th>Caption</th><th>Type</th><th>Scheduled</th><th>Status</th><th>Result</th><th></th></tr>
-    {% for p in posts %}
-    <tr>
-      <td>{{ p.id }}</td>
-      <td>{{ (p.caption or '')[:40] }}{% if p.caption and p.caption|length > 40 %}…{% endif %}</td>
-      <td>{{ p.media_type }}</td>
-      <td>{{ p.scheduled_time }}</td>
-      <td><span class="status status-{{ p.status }}">{{ p.status }}</span></td>
-      <td>
-        {% if p.permalink %}<a href="{{ p.permalink }}" target="_blank">view post</a>{% endif %}
-        {% if p.error_message %}<span class="muted" title="{{ p.error_message }}">⚠ error (hover)</span>{% endif %}
-      </td>
-      <td>
-        {% if p.status == 'pending' %}
-        <form class="inline" action="{{ url_for('dashboard.publish_now', post_id=p.id) }}" method="post">
-          <button class="btn btn-secondary" type="submit">Publish now</button>
-        </form>
-        <form class="inline" action="{{ url_for('dashboard.cancel', post_id=p.id) }}" method="post">
-          <button class="btn btn-danger" type="submit">Cancel</button>
-        </form>
-        {% endif %}
-      </td>
-    </tr>
-    {% else %}
-    <tr><td colspan="7" class="muted">No posts yet.</td></tr>
-    {% endfor %}
-  </table>
-  {% endif %}
-
-</body>
+  </body>
 </html>

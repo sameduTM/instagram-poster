@@ -2,6 +2,7 @@
 JSON API equivalents of the dashboard actions, for scripting / integrating
 into other tools (cron jobs, n8n, Zapier-style automations, etc).
 """
+
 from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify
 
@@ -17,12 +18,14 @@ def get_account():
     account = db.get_active_account()
     if not account:
         return jsonify({"connected": False}), 200
-    return jsonify({
-        "connected": True,
-        "ig_user_id": account["ig_user_id"],
-        "username": account["username"],
-        "token_expires_at": account["token_expires_at"],
-    })
+    return jsonify(
+        {
+            "connected": True,
+            "ig_user_id": account["ig_user_id"],
+            "username": account["username"],
+            "token_expires_at": account["token_expires_at"],
+        }
+    )
 
 
 @api_bp.route("/posts", methods=["GET"])
@@ -51,7 +54,12 @@ def schedule_post():
     """
     account = db.get_active_account()
     if not account:
-        return jsonify({"error": "No connected Instagram account. Visit /auth/login first."}), 400
+        return (
+            jsonify(
+                {"error": "No connected Instagram account. Visit /auth/login first."}
+            ),
+            400,
+        )
 
     body = request.get_json(silent=True) or {}
     media_url = body.get("media_url")
@@ -107,9 +115,20 @@ def publish_now(post_id):
             media_type=post["media_type"],
         )
         db.update_post_status(
-            post_id, "published", container_id=container_id, ig_media_id=media_id, permalink=permalink
+            post_id,
+            "published",
+            container_id=container_id,
+            ig_media_id=media_id,
+            permalink=permalink,
         )
-        return jsonify({"id": post_id, "status": "published", "media_id": media_id, "permalink": permalink})
+        return jsonify(
+            {
+                "id": post_id,
+                "status": "published",
+                "media_id": media_id,
+                "permalink": permalink,
+            }
+        )
     except InstagramAPIError as e:
         db.update_post_status(post_id, "failed", error_message=str(e))
         return jsonify({"id": post_id, "status": "failed", "error": str(e)}), 502
