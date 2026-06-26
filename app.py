@@ -44,4 +44,4 @@ if __name__ == "__main__":
             "Copy .env.example to .env and fill them in. ***\n"
         )
 
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5050, debug=True)

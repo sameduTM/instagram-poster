@@ -6,3 +6,5 @@ static/uploads/*
 !static/uploads/.gitkeep
 venv/
 .venv/
+start_app.py
+check_logs.py

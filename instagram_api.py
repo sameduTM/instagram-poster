@@ -27,20 +27,20 @@ class InstagramAPIError(Exception):
         self.response_json = response_json
         self.status_code = status_code
 
-    def _check(resp):
-        try:
-            data = resp.json()
-        except ValueError:
-            raise InstagramAPIError(
-                f"Non-JSON response ({resp.status_code}): {resp.text[:300]}"
-            )
-        if resp.status_code >= 400 or "error" in data or "error_message" in data:
-            raise InstagramAPIError(
-                f"Instagram API error: {data}",
-                response_json=data,
-                status_code=resp.status_code,
-            )
-        return data
+def _check(resp):
+    try:
+        data = resp.json()
+    except ValueError:
+        raise InstagramAPIError(
+            f"Non-JSON response ({resp.status_code}): {resp.text[:300]}"
+        )
+    if resp.status_code >= 400 or "error" in data or "error_message" in data:
+        raise InstagramAPIError(
+            f"Instagram API error: {data}",
+            response_json=data,
+            status_code=resp.status_code,
+        )
+    return data
 
 
 class InstagramAPI:
